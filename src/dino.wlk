@@ -152,6 +152,7 @@ object vida {
 	
 	method text() = hp.toString()
 	method position() = game.at(10, game.height()-1)
+	//method image() = "vida.png"
 	method vida() = hp
 	method danno(num){
 		hp -= num
