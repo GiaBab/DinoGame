@@ -12,11 +12,13 @@ object juego{
 		game.addVisual(dino)
 		game.addVisual(reloj)
 		game.addVisual(vida)
+		//game.addVisual(dinoCorreror)
 		game.boardGround("4-06-marzo-chica.jpg")
 		keyboard.space().onPressDo{ self.jugar()}
 		keyboard.l().onPressDo{ dino.estasLoco()}
 		keyboard.f().onPressDo{game.say(dino, dino.saluda())}
 		keyboard.r().onPressDo{ dino.seRinde()}
+		//game.say(dinoCorreror, dinoCorreror.molestar())
 		game.onCollideDo(dino,{ obstaculo => self.terminar()})
 	}
 	
@@ -25,6 +27,7 @@ object juego{
 		reloj.iniciar()
 		cactus.iniciar()
 		vida.iniciar()
+		//dinoCorreror.iniciar()
 	}
 	
 	method jugar(){
@@ -94,6 +97,28 @@ object cactus {
 
 }
 
+/*object dinoCorreror {
+	const posicionInicial = game.at(game.width()-1,1)
+	var position = posicionInicial
+	
+	method imagen() = "dinoC.png"
+	method position() = position
+	method molestar() {
+		return "soy rapido"
+	}
+	method iniciar(){
+		position = posicionInicial
+		game.onTick(velocidad,"moverDinoCorreror",{self.mover()})
+	}
+	
+	method mover(){
+	position = position.left(2)
+	if (position.x() == -1)
+			position = posicionInicial
+	}
+	
+}
+*/
 object suelo{
 	
 	method position() = game.origin().up(1)
