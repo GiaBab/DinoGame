@@ -1,16 +1,22 @@
 import wollok.game.*
 
-const velocidad = 250
+const velocidad = 100
 
 object juego{
 
 	method configurar(){
 		game.width(12)
+		game.title("No tenes intenert")
 		game.addVisual(suelo)
 		game.addVisual(cactus)
 		game.addVisual(dino)
 		game.addVisual(reloj)
+		game.addVisual(vida)
+		game.boardGround("4-06-marzo-chica.jpg")
 		keyboard.space().onPressDo{ self.jugar()}
+		keyboard.l().onPressDo{ dino.estasLoco()}
+		keyboard.f().onPressDo{game.say(dino, dino.saluda())}
+		keyboard.r().onPressDo{ dino.seRinde()}
 		game.onCollideDo(dino,{ obstaculo => self.terminar()})
 	}
 	
@@ -18,6 +24,7 @@ object juego{
 		dino.iniciar()
 		reloj.iniciar()
 		cactus.iniciar()
+		vida.iniciar()
 	}
 	
 	method jugar(){
@@ -30,10 +37,15 @@ object juego{
 	}
 	
 	method terminar(){
-		game.removeTickEvent("moverCactus")
-		game.removeTickEvent("tiempo")
-		game.addVisual(gameOver)
-		dino.detener()
+		if(vida.vida()<1){
+			game.removeTickEvent("moverCactus")
+			game.removeTickEvent("tiempo")
+			game.addVisual(gameOver)
+			dino.detener()
+			}
+		else{
+			vida.danno(1)
+		}
 	}
 	
 }
@@ -121,4 +133,30 @@ object dino {
 		activo = false
 	}
 	method activo() = activo
+	
+	method saluda(){return "Hola"}
+	method estasLoco(){
+		if(vida.vida() == 3){
+			vida.danno(3)
+			}
+		else{}
+	}
+	method seRinde(){
+		vida.danno(3)
+		juego.terminar()
+	}
+}
+
+object vida {
+	var hp = 3
+	
+	method text() = hp.toString()
+	method position() = game.at(10, game.height()-1)
+	method vida() = hp
+	method danno(num){
+		hp -= num
+	}
+	method iniciar(){
+		hp = 3
+	}
 }
