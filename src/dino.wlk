@@ -5,20 +5,20 @@ const velocidad = 100
 object juego{
 
 	method configurar(){
-		game.width(12)
+		game.width(13)
 		game.title("No tenes intenert")
 		game.addVisual(suelo)
 		game.addVisual(cactus)
 		game.addVisual(dino)
 		game.addVisual(reloj)
 		game.addVisual(vida)
-		//game.addVisual(dinoCorreror)
+		game.addVisual(dinoCorreror)
 		game.boardGround("4-06-marzo-chica.jpg")
 		keyboard.space().onPressDo{ self.jugar()}
 		keyboard.l().onPressDo{ dino.estasLoco()}
 		keyboard.f().onPressDo{game.say(dino, dino.saluda())}
 		keyboard.r().onPressDo{ dino.seRinde()}
-		//game.say(dinoCorreror, dinoCorreror.molestar())
+		game.say(dinoCorreror, dinoCorreror.molestar())
 		game.onCollideDo(dino,{ obstaculo => self.terminar()})
 	}
 	
@@ -27,7 +27,7 @@ object juego{
 		reloj.iniciar()
 		cactus.iniciar()
 		vida.iniciar()
-		//dinoCorreror.iniciar()
+		dinoCorreror.iniciar()
 	}
 	
 	method jugar(){
@@ -97,28 +97,28 @@ object cactus {
 
 }
 
-/*object dinoCorreror {
-	const posicionInicial = game.at(game.width()-1,1)
+object dinoCorreror {
+	const posicionInicial = game.at(game.width()-1,2)
 	var position = posicionInicial
 	
-	method imagen() = "dinoC.png"
+	method image() = "dino C.png"
 	method position() = position
 	method molestar() {
-		return "soy rapido"
+		return "puedo volar"
 	}
 	method iniciar(){
 		position = posicionInicial
-		game.onTick(velocidad,"moverDinoCorreror",{self.mover()})
+		game.onTick(velocidad*2,"moverDinoCorreror",{self.mover()})
 	}
 	
 	method mover(){
-	position = position.left(2)
+	position = position.left(1)
 	if (position.x() == -1)
 			position = posicionInicial
 	}
 	
 }
-*/
+
 object suelo{
 	
 	method position() = game.origin().up(1)
